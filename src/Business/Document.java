@@ -63,6 +63,6 @@ abstract class Document {
     //public abstract void addDocument();
     //public abstract void borrowDocument();
     //public abstract void returnDocument();
-    //public abstract void displayDocuments();
+    public abstract void displayDocuments();
     //public abstract void searchForDocument();
 }

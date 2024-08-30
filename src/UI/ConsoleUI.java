@@ -1,5 +1,9 @@
 package UI;
 
+import Business.Book;
+import Business.Magazine;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConsoleUI {
@@ -8,10 +12,13 @@ public class ConsoleUI {
     public static final String BLUE = "\033[0;34m";
     public static final String MAGENTA = "\033[0;35m";
     public static final String PINK = "\033[38;5;13m";
-
+    public static final String GREEN = "\u001b[92m";
+    Scanner scanner = new Scanner(System.in);
+    Book book = new Book();
+    Magazine magazine = new Magazine();
 
     public void menu(){
-        Scanner scanner = new Scanner(System.in);
+
         boolean running = true;
 
         while (running) {
@@ -31,7 +38,26 @@ public class ConsoleUI {
             switch (choice) {
                 case 1:
                     System.out.println("Add a Document selected.");
-                    System.out.print(PINK+"Please select an option (1-2): "+RESET);
+                    System.out.println(BLUE+"+ "+RESET+"Please select an option (1-2): ");
+                    System.out.println(BLUE+"1. "+RESET+"Add a Book");
+                    System.out.println(BLUE+"2. "+RESET+"Add a Magazine");
+                    int addChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+
+                    if(addChoice == 1){
+                        System.out.println(BLUE+"+ Add a Book selected +"+RESET);
+                        book.addBook(scanner);
+
+                        System.out.println(GREEN+"+ Book added successfully +"+RESET);
+                    }else if(addChoice == 2){
+                        System.out.println(BLUE+"+ Add a Magazine selected +"+RESET);
+                        magazine.addMagazine(scanner);
+
+                        System.out.println(GREEN+"+ Magazine added successfully +"+RESET);
+                    }
+
+
                     handleMiniMenu(scanner);
                     break;
                 case 2:
@@ -44,6 +70,9 @@ public class ConsoleUI {
                     break;
                 case 4:
                     System.out.println("Display All Documents selected.");
+                    book.displayDocuments();
+                    magazine.displayDocuments();
+
                     handleMiniMenu(scanner);
                     break;
                 case 5:
