@@ -1,4 +1,8 @@
 package Business;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.UUID;
 
 abstract class Document {
@@ -60,7 +64,21 @@ abstract class Document {
         this.status = status;
     }
 
-    //public abstract void addDocument();
+    public void saveToFile(String doc){
+        try {
+            File myObj = new File("documents.txt");
+
+                BufferedWriter myWriter =  new BufferedWriter(new FileWriter("documents.txt", true));
+                myWriter.write(doc);
+                myWriter.newLine();
+                myWriter.close();
+
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
     //public abstract void borrowDocument();
     //public abstract void returnDocument();
     public abstract void displayDocuments();

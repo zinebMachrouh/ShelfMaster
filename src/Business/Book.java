@@ -9,9 +9,7 @@ public class Book extends Document{
     public static final String RESET = "\033[0m";
     public static final String RED = "\033[0;31m";
     public static final String BLUE = "\033[0;34m";
-    public static final String MAGENTA = "\033[0;35m";
-    public static final String PINK = "\033[38;5;13m";
-    public static final String GREEN = "\u001b[92m";
+
 
     private String isbn;
     public ArrayList<Book> books = new ArrayList<Book>();
@@ -68,30 +66,41 @@ public class Book extends Document{
         Book book = new Book(isbn, title, author, releaseDate, pages);
         books.add(book);
 
-        System.out.print("Book : {");
-        System.out.print(book.toString());
-        System.out.println("}");
+        System.out.print(BLUE+"+"+RESET+" Book : ");
+        System.out.print(book.toString(true));
+        System.out.println(BLUE+"+"+RESET);
+
+        book.saveToFile(book.toString(false));
     }
 
-    @Override
-    public String toString() {
-        return "id='" + getId() + '\'' +
-                ",isbn='" + isbn + '\'' +
-                ", title='" + getTitle() + '\'' +
-                ", author='" + getAuthor() + '\'' +
-                ", releaseDate='" + getReleaseDate() + '\'' +
-                ", status='" + getStatus() + '\'' +
-                ", pages=" + getPages() ;
+    public String toString(boolean includeColors) {
+        if (includeColors){
+            return BLUE + "id: " + RESET + getId() +
+                    BLUE + ", isbn: " + RESET + isbn +
+                    BLUE + ", title: " + RESET + getTitle() +
+                    BLUE + ", author: " + RESET + getAuthor() +
+                    BLUE + ", releaseDate: " + RESET + getReleaseDate() +
+                    BLUE + ", status: " + RESET + getStatus() +
+                    BLUE + ", pages: " + RESET + getPages();
+        }else{
+            return "Book : { id: " + getId() +
+                    ", isbn: " + isbn +
+                    ", title: " + getTitle() +
+                    ", author: " + getAuthor() +
+                    ", releaseDate: " + getReleaseDate() +
+                    ", status: " + getStatus() +
+                    ", pages: " + getPages()+" }";
+        }
     }
 
     @Override
     public void displayDocuments() {
         final int[] counter = {1};
         if(books.isEmpty()){
-            System.out.println("No books available.");
+            System.out.println(RED+"+"+RESET+" No books available.");
         }else{
             books.forEach(book -> {
-                System.out.println("Book " + counter[0] + ": " + book.toString());
+                System.out.println(BLUE+"+"+RESET+" Book " + counter[0] + ": " + book.toString(true));
                 counter[0]++;
             });
         }

@@ -3,6 +3,9 @@ package UI;
 import Business.Book;
 import Business.Magazine;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -26,7 +29,7 @@ public class ConsoleUI {
             System.out.println(MAGENTA + "+ 1. " + RESET + "Add a document                        " + MAGENTA + "+" + RESET);
             System.out.println(MAGENTA + "+ 2. " + RESET + "Borrow a document                     " + MAGENTA + "+" + RESET);
             System.out.println(MAGENTA + "+ 3. " + RESET + "Return a document                     " + MAGENTA + "+" + RESET);
-            System.out.println(MAGENTA + "+ 4. " + RESET + "Display all documents                 " + MAGENTA + "+" + RESET);
+            System.out.println(MAGENTA + "+ 4. " + RESET + "Display documents                     " + MAGENTA + "+" + RESET);
             System.out.println(MAGENTA + "+ 5. " + RESET + "Search for a document                 " + MAGENTA + "+" + RESET);
             System.out.println(MAGENTA + "+ 6. " + RESET + "Quit                                  " + MAGENTA + "+" + RESET);
             System.out.println(MAGENTA + "++++++++++++++++++++++++++++++++++++++++++++" + RESET);
@@ -55,6 +58,8 @@ public class ConsoleUI {
                         magazine.addMagazine(scanner);
 
                         System.out.println(GREEN+"+ Magazine added successfully +"+RESET);
+                    }else{
+                        System.out.println(RED+"+ Error: Invalid choice. Please select a number between 1 and 2 +"+RESET);
                     }
 
 
@@ -70,11 +75,48 @@ public class ConsoleUI {
                     handleMiniMenu(scanner);
                     break;
                 case 4:
-                    System.out.println("Display All Documents selected.");
-                    System.out.println(BLUE+"+ Books :"+RESET);
-                    book.displayDocuments();
-                    System.out.println(BLUE+"+ Magazines :"+RESET);
-                    magazine.displayDocuments();
+                    System.out.println("Display Documents selected.");
+
+                    System.out.println(BLUE+"+ "+RESET+"Please select an option (1-2): ");
+                    System.out.println(BLUE+"1. "+RESET+"All documents");
+                    System.out.println(BLUE+"2. "+RESET+"Session documents");
+                    int disChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (disChoice == 1) {
+                        System.out.println(BLUE+"+ "+RESET+"All documents selected +");
+                        BufferedReader reader = null;
+                        String filePath = "documents.txt";
+                        try {
+
+                            reader = new BufferedReader(new FileReader(filePath));
+                            String line;
+
+                            while ((line = reader.readLine()) != null) {
+                                System.out.println(BLUE+"+ "+RESET+line);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                if (reader != null) {
+                                    reader.close();
+                                }
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    } else if (disChoice == 2) {
+                        System.out.println(BLUE+"+ "+RESET+"Session documents selected");
+
+                        System.out.println(BLUE+"+ Books :"+RESET);
+                        book.displayDocuments();
+                        System.out.println(BLUE+"+ Magazines :"+RESET);
+                        magazine.displayDocuments();
+
+                    }else{
+                        System.out.println(RED+"+ Error: Invalid choice. Please select a number between 1 and 2 +"+RESET);
+                    }
 
                     handleMiniMenu(scanner);
                     break;
