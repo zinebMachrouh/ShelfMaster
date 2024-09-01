@@ -66,11 +66,14 @@ public class ConsoleUI {
                     break;
                 case 3:
                     System.out.println("Return a Document selected.");
+
                     handleMiniMenu(scanner);
                     break;
                 case 4:
                     System.out.println("Display All Documents selected.");
+                    System.out.println(BLUE+"+ Books :"+RESET);
                     book.displayDocuments();
+                    System.out.println(BLUE+"+ Magazines :"+RESET);
                     magazine.displayDocuments();
 
                     handleMiniMenu(scanner);
