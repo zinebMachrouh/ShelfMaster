@@ -60,7 +60,7 @@ public class Magazine extends Document{
             scanner.next();
         }
         int pages = scanner.nextInt();
-        while (!validation.handlePages(String.valueOf(pages))){
+        while (!validation.handleNumber(String.valueOf(pages))){
             System.out.println("Invalid number of pages. Please enter a valid number of pages: ");
             pages = scanner.nextInt();
         }
