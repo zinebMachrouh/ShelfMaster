@@ -126,6 +126,7 @@ public class ConsoleUI {
                     break;
                 case 6:
                     System.out.println(BLUE+"See you soon...");
+                    System.out.println("lolo");
                     running = false;
                     break;
                 default:
