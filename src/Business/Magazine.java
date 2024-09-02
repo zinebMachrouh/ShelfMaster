@@ -114,4 +114,15 @@ public class Magazine extends Document{
             });
         }
     }
+
+    @Override
+    public void searchForDocument(String search) {
+        final int[] counter = {1};
+        magazines.forEach(magazine -> {
+            if (magazine.getId().contains(search) || magazine.getTitle().contains(search) || magazine.getAuthor().contains(search) || magazine.getReleaseDate().contains(search)) {
+                System.out.println(BLUE + "+" + RESET + " Magazine " + counter[0] + ": " + magazine.toString(true));
+                counter[0]++;
+            }
+        });
+    }
 }

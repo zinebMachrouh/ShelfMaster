@@ -105,4 +105,19 @@ public class Book extends Document{
             });
         }
     }
+
+   @Override
+   public void searchForDocument(String search) {
+        final int[] counter = {1};
+        if(books.isEmpty()){
+            System.out.println(RED+"+"+RESET+" No books available.");
+        }else{
+            books.forEach(book -> {
+                if(book.getId().contains(search) || book.isbn.equals(search) || book.getTitle().contains(search) || book.getAuthor().contains(search) || book.getReleaseDate().contains(search)){
+                    System.out.println(BLUE+"+"+RESET+" Book " + counter[0] + ": " + book.toString(true));
+                    counter[0]++;
+                }
+            });
+        }
+    }
 }

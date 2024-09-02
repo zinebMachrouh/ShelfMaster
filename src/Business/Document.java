@@ -1,8 +1,6 @@
 package Business;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 import java.util.UUID;
 
 abstract class Document {
@@ -79,8 +77,9 @@ abstract class Document {
         }
     }
 
+    public abstract void searchForDocument(String searchTerm);
     //public abstract void borrowDocument();
     //public abstract void returnDocument();
     public abstract void displayDocuments();
-    //public abstract void searchForDocument();
+
 }
