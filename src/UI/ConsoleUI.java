@@ -4,9 +4,9 @@ import Business.Book;
 import Business.Magazine;
 
 import java.io.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-
 
 public class ConsoleUI {
     public static final String RESET = "\033[0m";
@@ -19,8 +19,7 @@ public class ConsoleUI {
     Book book = new Book();
     Magazine magazine = new Magazine();
 
-    public void menu(){
-
+    public void menu() {
         boolean running = true;
 
         while (running) {
@@ -33,125 +32,168 @@ public class ConsoleUI {
             System.out.println(MAGENTA + "+ 6. " + RESET + "Quit                                  " + MAGENTA + "+" + RESET);
             System.out.println(MAGENTA + "++++++++++++++++++++++++++++++++++++++++++++" + RESET);
 
-            System.out.print(PINK+"Please select an option (1-6): "+RESET);
+            System.out.print(PINK + "Please select an option (1-6): " + RESET);
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Add a Document selected.");
-                    System.out.println(BLUE+"+ "+RESET+"Please select an option (1-2): ");
-                    System.out.println(BLUE+"1. "+RESET+"Add a Book");
-                    System.out.println(BLUE+"2. "+RESET+"Add a Magazine");
-                    int addChoice = scanner.nextInt();
-                    scanner.nextLine();
-
-
-                    if(addChoice == 1){
-                        System.out.println(BLUE+"+ Add a Book selected +"+RESET);
-                        book.addDocument(scanner);
-
-                        System.out.println(GREEN+"+ Book added successfully +"+RESET);
-                    }else if(addChoice == 2){
-                        System.out.println(BLUE+"+ Add a Magazine selected +"+RESET);
-                        magazine.addDocument(scanner);
-
-                        System.out.println(GREEN+"+ Magazine added successfully +"+RESET);
-                    }else{
-                        System.out.println(RED+"+ Error: Invalid choice. Please select a number between 1 and 2 +"+RESET);
-                    }
-
-
-                    handleMiniMenu(scanner);
+                    handleAddDocument();
                     break;
                 case 2:
-                    System.out.println("Borrow a Document selected.");
-                    handleMiniMenu(scanner);
+                    handleDocumentStatusChange("BORROWED", "This document is already borrowed!", "Borrow a Document selected.");
                     break;
                 case 3:
-                    System.out.println("Return a Document selected.");
-
-                    handleMiniMenu(scanner);
+                    handleDocumentStatusChange("AVAILABLE", "This document is already available!", "Return a Document selected.");
                     break;
                 case 4:
-                    System.out.println("Display Documents selected.");
-
-                    System.out.println(BLUE+"+ "+RESET+"Please select an option (1-2): ");
-                    System.out.println(BLUE+"1. "+RESET+"All documents");
-                    System.out.println(BLUE+"2. "+RESET+"Session documents");
-                    int disChoice = scanner.nextInt();
-                    scanner.nextLine();
-
-                    if (disChoice == 1) {
-                        System.out.println(BLUE+"+ "+RESET+"All documents selected +");
-                        BufferedReader reader = null;
-                        String filePath = "documents.txt";
-                        try {
-
-                            reader = new BufferedReader(new FileReader(filePath));
-                            String line;
-
-                            while ((line = reader.readLine()) != null) {
-                                System.out.println(BLUE+"+ "+RESET+line);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } finally {
-                            try {
-                                if (reader != null) {
-                                    reader.close();
-                                }
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
-                    } else if (disChoice == 2) {
-                        System.out.println(BLUE+"+ "+RESET+"Session documents selected");
-
-                        System.out.println(BLUE+"+ Books :"+RESET);
-                        book.displayDocuments();
-                        System.out.println(BLUE+"+ Magazines :"+RESET);
-                        magazine.displayDocuments();
-
-                    }else{
-                        System.out.println(RED+"+ Error: Invalid choice. Please select a number between 1 and 2 +"+RESET);
-                    }
-
-                    handleMiniMenu(scanner);
+                    handleDisplayDocuments();
                     break;
                 case 5:
-                    System.out.println("Search for a Document selected.");
-                    System.out.print(BLUE+"+ "+RESET+"Enter search term: ");
-                    boolean found = false;
-                    String search = scanner.nextLine();
-
-                    try (Scanner scan = new Scanner(new File("documents.txt"))) {
-                        while (scan.hasNextLine()) {
-                            String line = scan.nextLine().toLowerCase();
-                            if (line.contains(search) ) {
-                                System.out.println(line);
-                                found = true;
-                            }
-                        }
-                    } catch (FileNotFoundException e) {
-                        System.out.println("Error: File not found - " + e.getMessage());
-                    }
-                    if (!found) {
-                        System.out.println(RED + "+" + RESET + " No matching documents found.");
-                    }
-
-                    handleMiniMenu(scanner);
+                    handleSearchDocument();
                     break;
                 case 6:
-                    System.out.println(BLUE+"See you soon...");
+                    System.out.println(BLUE + "See you soon..." + RESET);
                     running = false;
                     break;
                 default:
-                    System.out.println(RED+"+ Error: Invalid choice. Please select a number between 1 and 6 +"+RESET);
+                    System.out.println(RED + "+ Error: Invalid choice. Please select a number between 1 and 6 +" + RESET);
             }
         }
 
         scanner.close();
+    }
+
+    private void handleAddDocument() {
+        System.out.println("Add a Document selected.");
+        System.out.println(BLUE + "+ " + RESET + "Please select an option (1-2): ");
+        System.out.println(BLUE + "1. " + RESET + "Add a Book");
+        System.out.println(BLUE + "2. " + RESET + "Add a Magazine");
+        int addChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (addChoice == 1) {
+            System.out.println(BLUE + "+ Add a Book selected +" + RESET);
+            book.addDocument(scanner);
+            System.out.println(GREEN + "+ Book added successfully +" + RESET);
+        } else if (addChoice == 2) {
+            System.out.println(BLUE + "+ Add a Magazine selected +" + RESET);
+            magazine.addDocument(scanner);
+            System.out.println(GREEN + "+ Magazine added successfully +" + RESET);
+        } else {
+            System.out.println(RED + "+ Error: Invalid choice. Please select a number between 1 and 2 +" + RESET);
+        }
+
+        handleMiniMenu(scanner);
+    }
+
+    private void handleDocumentStatusChange(String newStatus, String alreadyStatusMessage, String operationMessage) {
+        System.out.println(operationMessage);
+        System.out.print(BLUE + "+ " + RESET + "Enter the ID of the document: ");
+        String id = scanner.nextLine();
+
+        List<String> documents = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("documents.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                documents.add(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+            return;
+        }
+
+        boolean documentFound = false;
+        boolean statusChanged = false;
+
+        for (int i = 0; i < documents.size(); i++) {
+            String document = documents.get(i);
+            if (document.contains("id: " + id)) {
+                documentFound = true;
+
+                if (document.contains("status: " + newStatus)) {
+                    System.out.println(alreadyStatusMessage);
+                    break;
+                }
+
+                String updatedDocument = document.replaceFirst("status: [A-Z]+", "status: " + newStatus);
+                documents.set(i, updatedDocument);
+                statusChanged = true;
+                break;
+            }
+        }
+
+        if (documentFound && statusChanged) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("documents.txt"))) {
+                for (String document : documents) {
+                    writer.write(document);
+                    writer.newLine();
+                }
+                System.out.println("Document status updated successfully.");
+            } catch (IOException e) {
+                System.out.println("Error writing to the file: " + e.getMessage());
+            }
+        } else if (!documentFound) {
+            System.out.println("No document found with the provided ID.");
+        }
+
+        handleMiniMenu(scanner);
+    }
+
+    private void handleDisplayDocuments() {
+        System.out.println("Display Documents selected.");
+        System.out.println(BLUE + "+ " + RESET + "Please select an option (1-2): ");
+        System.out.println(BLUE + "1. " + RESET + "All documents");
+        System.out.println(BLUE + "2. " + RESET + "Session documents");
+        int disChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (disChoice == 1) {
+            System.out.println(BLUE + "+ All documents selected +" + RESET);
+            try (BufferedReader reader = new BufferedReader(new FileReader("documents.txt"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(BLUE + "+ " + RESET + line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (disChoice == 2) {
+            System.out.println("+ Session documents selected +");
+            System.out.println(BLUE + "+ Books :" + RESET);
+            book.displayDocuments();
+            System.out.println(BLUE + "+ Magazines :" + RESET);
+            magazine.displayDocuments();
+        } else {
+            System.out.println(RED + "+ Error: Invalid choice. Please select a number between 1 and 2 +" + RESET);
+        }
+
+        handleMiniMenu(scanner);
+    }
+
+    private void handleSearchDocument() {
+        System.out.println("Search for a Document selected.");
+        System.out.print(BLUE + "+ " + RESET + "Enter search term: ");
+        boolean found = false;
+        String search = scanner.nextLine();
+
+        try (Scanner scan = new Scanner(new File("documents.txt"))) {
+            while (scan.hasNextLine()) {
+                String line = scan.nextLine().toLowerCase();
+                if (line.contains(search)) {
+                    System.out.println(BLUE+"+"+RESET+line);
+                    found = true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found - " + e.getMessage());
+        }
+        if (!found) {
+            System.out.println(RED + "+" + RESET + " No matching documents found.");
+        }
+
+        handleMiniMenu(scanner);
     }
 
     private static void handleMiniMenu(Scanner scanner) {
@@ -172,11 +214,11 @@ public class ConsoleUI {
                     backToMainMenu = false;
                     break;
                 case 2:
-                    System.out.println(BLUE+"See you soon..."+RESET);
+                    System.out.println(BLUE + "See you soon..." + RESET);
                     System.exit(0);
                     break;
                 default:
-                    System.out.println(RED+"+ Error: Invalid choice. Please select 1 or 2 +"+RESET);
+                    System.out.println(RED + "+ Error: Invalid choice. Please select 1 or 2 +" + RESET);
             }
         }
     }
