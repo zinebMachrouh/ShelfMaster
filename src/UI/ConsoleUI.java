@@ -3,11 +3,10 @@ package UI;
 import Business.Book;
 import Business.Magazine;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.*;
+
 import java.util.Scanner;
+
 
 public class ConsoleUI {
     public static final String RESET = "\033[0m";
@@ -50,12 +49,12 @@ public class ConsoleUI {
 
                     if(addChoice == 1){
                         System.out.println(BLUE+"+ Add a Book selected +"+RESET);
-                        book.addBook(scanner);
+                        book.addDocument(scanner);
 
                         System.out.println(GREEN+"+ Book added successfully +"+RESET);
                     }else if(addChoice == 2){
                         System.out.println(BLUE+"+ Add a Magazine selected +"+RESET);
-                        magazine.addMagazine(scanner);
+                        magazine.addDocument(scanner);
 
                         System.out.println(GREEN+"+ Magazine added successfully +"+RESET);
                     }else{
@@ -122,11 +121,29 @@ public class ConsoleUI {
                     break;
                 case 5:
                     System.out.println("Search for a Document selected.");
+                    System.out.print(BLUE+"+ "+RESET+"Enter search term: ");
+                    boolean found = false;
+                    String search = scanner.nextLine();
+
+                    try (Scanner scan = new Scanner(new File("documents.txt"))) {
+                        while (scan.hasNextLine()) {
+                            String line = scan.nextLine().toLowerCase();
+                            if (line.contains(search) ) {
+                                System.out.println(line);
+                                found = true;
+                            }
+                        }
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Error: File not found - " + e.getMessage());
+                    }
+                    if (!found) {
+                        System.out.println(RED + "+" + RESET + " No matching documents found.");
+                    }
+
                     handleMiniMenu(scanner);
                     break;
                 case 6:
                     System.out.println(BLUE+"See you soon...");
-                    System.out.println("lolo");
                     running = false;
                     break;
                 default:

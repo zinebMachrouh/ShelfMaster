@@ -77,9 +77,10 @@ abstract class Document {
         }
     }
 
-    public abstract void searchForDocument(String searchTerm);
+    //public abstract boolean searchForDocument(String searchTerm);
     //public abstract void borrowDocument();
     //public abstract void returnDocument();
+    public abstract void addDocument(Scanner scanner);
     public abstract void displayDocuments();
 
 }

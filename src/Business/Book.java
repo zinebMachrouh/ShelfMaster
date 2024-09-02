@@ -1,8 +1,11 @@
 package Business;
 import Utils.Validation;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Book extends Document{
@@ -15,6 +18,8 @@ public class Book extends Document{
     public ArrayList<Book> books = new ArrayList<Book>();
     Validation validation = new Validation();
 
+
+
     public Book(String isbn, String title, String author, String releaseDate, int pages){
         super(title, author, releaseDate, pages);
         this.isbn = isbn;
@@ -23,7 +28,7 @@ public class Book extends Document{
         super("", "", "", 0);
         this.isbn = "";
     }
-    public void addBook(Scanner scanner){
+    public void addDocument(Scanner scanner){
         System.out.println(BLUE+"+"+RESET+"Enter the ISBN of the book (10 or 13 characters): ");
         String isbn = scanner.nextLine();
         while(!validation.handleIsbn(isbn)){
@@ -66,6 +71,8 @@ public class Book extends Document{
         Book book = new Book(isbn, title, author, releaseDate, pages);
         books.add(book);
 
+
+
         System.out.print(BLUE+"+"+RESET+" Book : ");
         System.out.print(book.toString(true));
         System.out.println(BLUE+"+"+RESET);
@@ -106,18 +113,4 @@ public class Book extends Document{
         }
     }
 
-   @Override
-   public void searchForDocument(String search) {
-        final int[] counter = {1};
-        if(books.isEmpty()){
-            System.out.println(RED+"+"+RESET+" No books available.");
-        }else{
-            books.forEach(book -> {
-                if(book.getId().contains(search) || book.isbn.equals(search) || book.getTitle().contains(search) || book.getAuthor().contains(search) || book.getReleaseDate().contains(search)){
-                    System.out.println(BLUE+"+"+RESET+" Book " + counter[0] + ": " + book.toString(true));
-                    counter[0]++;
-                }
-            });
-        }
-    }
-}
+   }
