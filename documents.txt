@@ -1,6 +1,4 @@
 Magazine : { id: d7f59fc1-a25d-4681-b804-82c8c9e59b84, number: 555, title: mac, author: mac, releaseDate: 02/02/2002, status: AVAILABLE, pages: 5555 }
 Magazine : { id: bbf2dbde-43ea-4af7-9d07-d179bda440be, number: 888, title: mizo, author: mizo, releaseDate: 02/02/2003, status: AVAILABLE, pages: 999 }
-Magazine : { id: dadd8830-d172-46f1-9d40-ce0b164f9bb5, number: 2020, title: hdkdfzhrz, author: nini, releaseDate: 02/19/2020, status: BORROWED, pages: 52 }
-Book : { id: 25777dca-0ea5-4630-98d1-f7cd03a6466f, isbn: 9781234567897, title: lolo, author: lolo, releaseDate: 02/02/2001, status: BORROWED, pages: 2582 }
+Book : { id: 25777dca-0ea5-4630-98d1-f7cd03a6466f, isbn: 9781234567897, title: vghbjkl, author: cvhbjnk, releaseDate: 05/05/2000, status: AVAILABLE, pages: 5555 }
 Magazine : { id: c28cca92-094c-4653-b066-ee33d453d5a3, number: 2555, title: nini, author: hhhh, releaseDate: 02/08/2020, status: AVAILABLE, pages: 2222 }
-Book : { id: 3741faf6-aa1f-4a51-bd10-ebfd88a5b29d, isbn: 9781234567897, title: loli, author: loli, releaseDate: 02/08/2000, status: AVAILABLE, pages: 1558 }

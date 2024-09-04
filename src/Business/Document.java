@@ -79,6 +79,8 @@ abstract class Document {
 
 
     public abstract void addDocument(Scanner scanner);
+    public abstract  void modifyDocument(Scanner scanner);
+    public abstract  void deleteDocument(Scanner scanner);
     public abstract void displayDocuments();
 
 }

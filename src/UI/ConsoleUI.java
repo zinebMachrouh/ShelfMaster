@@ -24,44 +24,121 @@ public class ConsoleUI {
 
         while (running) {
             System.out.println(MAGENTA + "++++++++++" + RESET + " Welcome to the Library " + MAGENTA + "++++++++++" + RESET);
-            System.out.println(MAGENTA + "+ 1. " + RESET + "Add a document                        " + MAGENTA + "+" + RESET);
-            System.out.println(MAGENTA + "+ 2. " + RESET + "Borrow a document                     " + MAGENTA + "+" + RESET);
-            System.out.println(MAGENTA + "+ 3. " + RESET + "Return a document                     " + MAGENTA + "+" + RESET);
-            System.out.println(MAGENTA + "+ 4. " + RESET + "Display documents                     " + MAGENTA + "+" + RESET);
-            System.out.println(MAGENTA + "+ 5. " + RESET + "Search for a document                 " + MAGENTA + "+" + RESET);
-            System.out.println(MAGENTA + "+ 6. " + RESET + "Quit                                  " + MAGENTA + "+" + RESET);
+            System.out.println(MAGENTA + "+ 1. " + RESET + "Borrow a document                     " + MAGENTA + "+" + RESET);
+            System.out.println(MAGENTA + "+ 2. " + RESET + "Return a document                     " + MAGENTA + "+" + RESET);
+            System.out.println(MAGENTA + "+ 3. " + RESET + "Display documents                     " + MAGENTA + "+" + RESET);
+            System.out.println(MAGENTA + "+ 4. " + RESET + "Search for a document                 " + MAGENTA + "+" + RESET);
+            System.out.println(MAGENTA + "+ 5. " + RESET + "Quit                                  " + MAGENTA + "+" + RESET);
             System.out.println(MAGENTA + "++++++++++++++++++++++++++++++++++++++++++++" + RESET);
 
             System.out.print(PINK + "Please select an option (1-6): " + RESET);
+
+            while (!scanner.hasNextInt()) {
+                System.out.println(RED+"+ Invalid input."+RESET+" Please enter a valid number: ");
+                scanner.next();
+            }
             int choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    handleAddDocument();
-                    break;
-                case 2:
                     handleDocumentStatusChange("BORROWED", "This document is already borrowed!", "Borrow a Document selected.");
                     break;
-                case 3:
+                case 2:
                     handleDocumentStatusChange("AVAILABLE", "This document is already available!", "Return a Document selected.");
                     break;
-                case 4:
+                case 3:
                     handleDisplayDocuments();
                     break;
-                case 5:
+                case 4:
                     handleSearchDocument();
                     break;
-                case 6:
+                case 5:
                     System.out.println(BLUE + "See you soon..." + RESET);
                     running = false;
                     break;
+                case 2020:
+                    System.out.println(BLUE + "++++++++++" + RESET + " Admin Menu " + BLUE + "++++++++++" + RESET);
+                    System.out.println(BLUE + "+ 1. " + RESET + "Add a document            " + BLUE + "+" + RESET);
+                    System.out.println(BLUE + "+ 2. " + RESET + "Modify a document         " + BLUE + "+" + RESET);
+                    System.out.println(BLUE + "+ 3. " + RESET + "Delete a document         " + BLUE + "+" + RESET);
+                    System.out.println(BLUE + "+ 4. " + RESET + "Quit                      " + BLUE + "+" + RESET);
+                    System.out.println(BLUE + "++++++++++++++++++++++++++++++++" + RESET);
+
+                    System.out.print(BLUE +"+"+RESET+ " Please select an option (1-4): ");
+                    int adminChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (adminChoice) {
+                        case 1:
+                            handleAddDocument();
+                            break;
+                        case 2:
+                            handleModifyDocument();
+                            break;
+                        case 3:
+                            handleDeleteDocument();
+                            break;
+                        case 4:
+                            System.out.println(BLUE + "See you soon..." + RESET);
+                            running = false;
+                            break;
+                        default:
+                            System.out.println(RED + "+ Error: Invalid choice. Please select a number between 1 and 4 +" + RESET);
+                    }
+                    break;
                 default:
-                    System.out.println(RED + "+ Error: Invalid choice. Please select a number between 1 and 6 +" + RESET);
+                    System.out.println(RED + "+ Error: Invalid choice. Please select a number between 1 and 5 +" + RESET);
             }
         }
 
         scanner.close();
+    }
+
+    public void handleDeleteDocument(){
+        System.out.println("Delete a Document selected.");
+        System.out.println(BLUE + "+ " + RESET + "Please select an option (1-2): ");
+        System.out.println(BLUE + "1. " + RESET + "Delete a Book");
+        System.out.println(BLUE + "2. " + RESET + "Delete a Magazine");
+        int modChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (modChoice == 1) {
+            System.out.println(BLUE + "+ Delete a Book selected +" + RESET);
+            book.deleteDocument(scanner);
+
+        } else if (modChoice == 2) {
+            System.out.println(BLUE + "+ Delete a Magazine selected +" + RESET);
+            magazine.deleteDocument(scanner);
+
+        } else {
+            System.out.println(RED + "+ Error: Invalid choice. Please select a number between 1 and 2 +" + RESET);
+        }
+
+        handleMiniMenu(scanner);
+    }
+
+    private  void handleModifyDocument(){
+        System.out.println("Modify a Document selected.");
+        System.out.println(BLUE + "+ " + RESET + "Please select an option (1-2): ");
+        System.out.println(BLUE + "1. " + RESET + "Modify a Book");
+        System.out.println(BLUE + "2. " + RESET + "Modify a Magazine");
+        int modChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (modChoice == 1) {
+            System.out.println(BLUE + "+ Modify a Book selected +" + RESET);
+            book.modifyDocument(scanner);
+
+        } else if (modChoice == 2) {
+            System.out.println(BLUE + "+ Modify a Magazine selected +" + RESET);
+            magazine.modifyDocument(scanner);
+
+        } else {
+            System.out.println(RED + "+ Error: Invalid choice. Please select a number between 1 and 2 +" + RESET);
+        }
+
+        handleMiniMenu(scanner);
     }
 
     private void handleAddDocument() {
@@ -86,6 +163,7 @@ public class ConsoleUI {
 
         handleMiniMenu(scanner);
     }
+
 
     private void handleDocumentStatusChange(String newStatus, String alreadyStatusMessage, String operationMessage) {
         System.out.println(operationMessage);
