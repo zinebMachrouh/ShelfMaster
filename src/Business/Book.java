@@ -14,7 +14,7 @@ public class Book extends Document {
     private String isbn;
     private static final String DOCUMENT_FILE = "documents.txt";
     private final List<Book> books = new ArrayList<>();
-    private final Validation validation = new Validation();
+
 
     public Book(String isbn, String title, String author, String releaseDate, int pages) {
         super(title, author, releaseDate, pages);
