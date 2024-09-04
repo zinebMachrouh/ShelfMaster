@@ -72,7 +72,7 @@ public class Book extends Document {
         boolean documentFound = false;
         for (int i = 0; i < documents.size(); i++) {
             String document = documents.get(i);
-            if (document.contains("id: " + id)) {
+            if (document.contains("id: " + id) && document.contains("Book")) {
                 documentFound = true;
 
                 System.out.println(BLUE + "+" + RESET + "Enter the new ISBN of the book: ");
@@ -132,7 +132,7 @@ public class Book extends Document {
         boolean bookDeleted = false;
         for (int i = 0; i < documents.size(); i++) {
             String document = documents.get(i);
-            if (document.contains("id: " + idToDelete)) {
+            if (document.contains("id: " + idToDelete) && document.contains("Book")) {
                 documents.remove(i);
                 bookDeleted = true;
                 break;
@@ -162,7 +162,7 @@ public class Book extends Document {
                 scanner.next();
             }
             number = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
             if (Validation.handleNumber(String.valueOf(number))) {
                 break;
             }

@@ -74,7 +74,7 @@ public class Magazine extends Document {
         boolean documentFound = false;
         for (int i = 0; i < documents.size(); i++) {
             String document = documents.get(i);
-            if (document.contains("id: " + id)) {
+            if (document.contains("id: " + id) && document.contains("Magazine")) {
                 documentFound = true;
 
 
@@ -194,7 +194,7 @@ public class Magazine extends Document {
 
         for (int i = 0; i < documents.size(); i++) {
             String document = documents.get(i);
-            if (document.contains("id: " + idToDelete)) {
+            if (document.contains("id: " + idToDelete) && document.contains("Magazine")) {
                 documents.remove(i);
                 magazineDeleted = true;
                 break;
